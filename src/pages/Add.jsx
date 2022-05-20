@@ -14,6 +14,7 @@ const getData = async () => {
       },
     });
     const data = await res.json();
+    // console.log('res ===', res);
     return data;
   } catch (error) {
     return error;
@@ -24,7 +25,7 @@ const Add = () => {
   const [data, setData] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [reload, setReload] = useState();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   useEffect(
@@ -35,8 +36,9 @@ const Add = () => {
   );
 
   const addTask = async (event) => {
+    // console.log('addTask ===', addTask);
     event.preventDefault();
-    setLoading(true);
+    // setLoading(true);
     try {
       const res = await fetch(`${process.env.REACT_APP_BASE_URL}/v1/content`, {
         method: 'POST',
@@ -44,16 +46,14 @@ const Add = () => {
           authorization: `Bearer: ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ task: newTask }),
+        body: JSON.stringify({ description: newTask }),
       });
       const data = await res.json();
-      setNewTask('');
       setReload(!reload);
+      setNewTask('');
       alert(data.msg || data.err || 'Unknown error');
     } catch (error) {
       alert(error.message || 'Unexpected error');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -70,10 +70,15 @@ const Add = () => {
       <Header>Todo App</Header>
       <Section margin='0 auto' padding='1rem'>
         <Button handleClick={logout}>Logout</Button>
+
         {data.length === 0 && (
-          <Section>No tasks found, please add one:</Section>
+          <Section margin='0 auto' padding='1rem'>
+            No tasks found, please add one:
+          </Section>
         )}
-        {data.length > 0 && <TaskList></TaskList>}
+        {data.length > 0 && (
+          <TaskList tasks={data} handleClick={(id) => alert(id)} />
+        )}
       </Section>
       <Section margin='0 auto' padding='1rem'>
         <form onSubmit={addTask}>
@@ -85,7 +90,7 @@ const Add = () => {
             initValue={newTask}
             handleChange={(value) => setNewTask(value)}
           />
-          <Button loading={loading}>Add</Button>
+          <Button>Add</Button>
         </form>
       </Section>
     </>
