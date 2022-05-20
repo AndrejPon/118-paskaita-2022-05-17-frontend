@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button/Button';
 import Header from '../components/Header/Header';
 import Input from '../components/Input/Input';
@@ -10,6 +11,8 @@ const Register = () => {
     email: '',
     password: '',
   });
+
+  const navigate = useNavigate();
 
   const onRegister = async (event) => {
     event.preventDefault();
@@ -26,7 +29,9 @@ const Register = () => {
         }
       );
       const data = await res.json();
+      console.log('data ===', data);
       alert(data.msg || data.err || 'Unknown Issue');
+      navigate('/login');
     } catch (error) {
       alert(error.message || 'Unexpected Issue');
     }
