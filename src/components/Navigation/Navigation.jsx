@@ -16,8 +16,8 @@ const Navigation = ({ links }) => {
 };
 
 Navigation.propTypes = {
-  children: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+  children: PropTypes.string,
+  links: PropTypes.array,
 };
 
 export default Navigation;
