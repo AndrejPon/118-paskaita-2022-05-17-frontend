@@ -76,9 +76,6 @@ const Add = () => {
             No tasks found, please add one:
           </Section>
         )}
-        {data.length > 0 && (
-          <TaskList tasks={data} handleClick={(id) => alert(id)} />
-        )}
       </Section>
       <Section margin='0 auto' padding='1rem'>
         <form onSubmit={addTask}>
@@ -92,6 +89,9 @@ const Add = () => {
           />
           <Button>Add</Button>
         </form>
+        {data.length > 0 && (
+          <TaskList tasks={data} handleClick={(id) => alert(id)} />
+        )}
       </Section>
     </>
   );

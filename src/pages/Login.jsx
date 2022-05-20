@@ -34,7 +34,7 @@ const Login = () => {
       console.log('data===', data);
       console.log(data.token);
       if (!data.token) {
-        return alert(data.err || 'Unknown Issue');
+        return alert(data.msg || 'Unknown Issue');
       }
       localStorage.setItem('token', data.token);
       console.log(data.token);
